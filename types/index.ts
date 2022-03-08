@@ -1,8 +1,8 @@
 export interface Workout {
   id: 1,
   name: string,
-  created_at: Date,
-  performed_at: Date,
+  created_at: string,
+  performed_at: string,
   exercises: Array<Exercise>,
 }
 

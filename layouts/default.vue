@@ -10,23 +10,23 @@
     </v-main>
 
     <v-bottom-navigation>
-      <v-btn value="recent">
+      <v-btn to="/">
         <span>Profile</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
 
-      <v-btn value="recent">
+      <v-btn to="/history">
         <span>History</span>
         <v-icon>mdi-history</v-icon>
       </v-btn>
 
-      <v-btn to="workout">
+      <v-btn to="/workout">
         <span>Workout</span>
         <v-icon>mdi-plus</v-icon>
       </v-btn>
 
-      <v-btn value="nearby">
-        <span>Excercises</span>
+      <v-btn to="/exercises">
+        <span>Exercises</span>
         <v-icon>mdi-dumbbell</v-icon>
       </v-btn>
     </v-bottom-navigation>

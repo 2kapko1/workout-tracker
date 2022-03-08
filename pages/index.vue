@@ -18,12 +18,8 @@
             3 PRs
           </v-col>
         </v-row>
-
-
       </v-card-text>
-
     </v-card>
-
   </v-container>
 </template>
 
@@ -52,10 +48,6 @@ export default Vue.extend({
       const d = new Date(Date.now() - days * 86400000);
       return d.toISOString().substr(0, 10);
     })
-  }
-  name: 'IndexPage',
-  async fetch() {
-    await this.$store.dispatch('workout/load');
   }
 })
 </script>

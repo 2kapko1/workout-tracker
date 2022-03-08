@@ -14,11 +14,14 @@
     </template>
 
     <v-list>
-      <v-list-item>
-        <v-list-item-title>Edytuj</v-list-item-title>
+      <v-list-item @click="editWorkout">
+        <v-list-item-title>Edit</v-list-item-title>
       </v-list-item>
-      <v-list-item>
-        <v-list-item-title>Usuń</v-list-item-title>
+      <v-list-item @click="copyWorkout">
+        <v-list-item-title>Copy</v-list-item-title>
+      </v-list-item>
+      <v-list-item @click="removeWorkout">
+        <v-list-item-title>Delete</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>
@@ -28,7 +31,20 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'WorkoutCardMenu'
+  name: 'WorkoutCardMenu',
+  props: {
+    workoutId: Number
+  },
+  methods: {
+    removeWorkout() {
+      this.$store.dispatch('workout/remove', this.workoutId);
+    },
+    editWorkout() {
 
+    },
+    copyWorkout() {
+      this.$store.dispatch('workout/copy', this.workoutId);
+    }
+  }
 })
 </script>
