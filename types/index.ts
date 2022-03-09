@@ -12,6 +12,6 @@ export interface Exercise {
 }
 
 export interface Set {
-  weight: Number,
-  reps: Number,
+  weight: Number|null,
+  reps: Number|null,
 }

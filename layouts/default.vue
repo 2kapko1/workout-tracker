@@ -20,7 +20,7 @@
         <v-icon>mdi-history</v-icon>
       </v-btn>
 
-      <v-btn to="/workout">
+      <v-btn to="/workouts">
         <span>Workout</span>
         <v-icon>mdi-plus</v-icon>
       </v-btn>

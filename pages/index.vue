@@ -28,9 +28,6 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'IndexPage',
-  async fetch() {
-    await this.$store.dispatch('workout/load');
-  },
   data() {
     return {
       selected: new Date().toISOString().slice(0, 10),

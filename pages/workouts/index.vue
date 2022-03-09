@@ -5,7 +5,7 @@
     <div class="d-flex">
       <span class="text-h6">My templates</span>
       <v-spacer/>
-      <v-btn text>
+      <v-btn text :to="'/workouts/create'">
         <v-icon left>mdi-plus</v-icon>
         ADD NEW
       </v-btn>
@@ -25,7 +25,7 @@ import {mapGetters} from 'vuex'
 import WorkoutCard from "~/components/WorkoutCard.vue";
 
 export default Vue.extend({
-  name: 'WorkoutIndex',
+  name: 'WorkoutIndexPage',
   components: {WorkoutCard},
   computed: {
     ...mapGetters('workout', {workouts: "list"})
