@@ -8,10 +8,7 @@
     <div class="d-flex align-center">
       <span>Exercises</span>
       <v-spacer/>
-      <v-btn text @click="addExercise">
-        <v-icon left>mdi-plus</v-icon>
-        ADD EXERCISE
-      </v-btn>
+      <exercises-dialog/>
     </div>
 
     <v-expansion-panels class="mt-4">
