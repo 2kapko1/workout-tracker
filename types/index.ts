@@ -3,15 +3,20 @@ export interface Workout {
   name: string,
   created_at: string,
   performed_at: string,
-  exercises: Array<Exercise>,
+  exercises: WorkoutExercise[],
+}
+
+export interface WorkoutExercise {
+  exercise: Exercise,
+  sets: Set[],
 }
 
 export interface Exercise {
+  id: number,
   name: string,
-  sets: Array<Set>,
 }
 
 export interface Set {
-  weight: Number|null,
-  reps: Number|null,
+  weight: number | null,
+  reps: number | null,
 }

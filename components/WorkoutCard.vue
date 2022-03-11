@@ -11,8 +11,8 @@
       </template>
 
       <ul>
-        <li v-for="exercise in workout.exercises">
-          {{exercise.sets.length}} x {{exercise.name}}
+        <li v-for="workoutExercise in workout.exercises">
+          {{workoutExercise.sets.length}} x {{workoutExercise.exercise.name}}
         </li>
       </ul>
     </v-card-text>

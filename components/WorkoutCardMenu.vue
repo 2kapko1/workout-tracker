@@ -37,13 +37,13 @@ export default Vue.extend({
   },
   methods: {
     removeWorkout() {
-      this.$store.dispatch('workout/remove', this.workoutId);
+      this.$store.dispatch('workout.ts/remove', this.workoutId);
     },
     editWorkout() {
 
     },
     copyWorkout() {
-      this.$store.dispatch('workout/copy', this.workoutId);
+      this.$store.dispatch('workout.ts/copy', this.workoutId);
     }
   }
 })
