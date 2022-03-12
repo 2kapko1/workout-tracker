@@ -1,5 +1,5 @@
 import {GetterTree, MutationTree, ActionTree} from "vuex";
-import {Exercise, Workout} from "~/types";
+import {Exercise} from "~/types";
 import {RootState} from "~/store/index";
 
 export const state = () => ({

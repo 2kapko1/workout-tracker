@@ -1,7 +1,14 @@
 <template>
-  <v-expansion-panel>
+  <v-expansion-panel class="expansion-panel__with-button">
     <v-expansion-panel-header>
-      {{ exercise.name }}
+      <span>
+        <v-btn tile @click.stop="removeExercise">
+          <v-icon color="error">
+            mdi-delete
+          </v-icon>
+        </v-btn>
+      {{ exercise.exercise.name }}
+      </span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <v-row>
@@ -46,19 +53,19 @@
 
 <script lang="ts">
 import Vue, {PropType} from 'vue'
-import {Exercise} from "~/types";
+import {Exercise, WorkoutExercise} from "~/types";
 
 export default Vue.extend({
   name: 'ExerciseFormPanel',
   props: {
-    value: Object as PropType<Exercise>
+    value: Object as PropType<WorkoutExercise>
   },
   computed: {
     exercise: {
-      get(): Exercise {
+      get(): WorkoutExercise {
         return this.value;
       },
-      set(exercise: Exercise) {
+      set(exercise: WorkoutExercise) {
         this.$emit('input', exercise);
       }
     }
@@ -72,6 +79,9 @@ export default Vue.extend({
     },
     removeSet(index: number) {
       this.exercise.sets.splice(index, 1)
+    },
+    removeExercise() {
+      this.$emit('removeExercise');
     }
   }
 })

@@ -8,7 +8,7 @@
     <div class="d-flex align-center">
       <span>Exercises</span>
       <v-spacer/>
-      <exercises-dialog/>
+      <exercises-dialog @addExercises="addExercises"/>
     </div>
 
     <v-expansion-panels class="mt-4">
@@ -16,6 +16,7 @@
         v-for="(exercise, index) in exercises"
         :key="index"
         v-model="exercises[index]"
+        @removeExercise="removeExercise(index)"
       />
     </v-expansion-panels>
 
@@ -24,24 +25,28 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {Exercise} from "~/types";
+import {Exercise, WorkoutExercise} from "~/types";
 
 export default Vue.extend({
   name: 'WorkoutForm',
   data() {
     return {
-      exercises: [] as Array<Exercise>,
+      exercises: [] as Array<WorkoutExercise>,
     }
   },
   methods: {
-    addExercise() {
+    addExercises(exercises: Exercise[]) {
+      exercises.forEach(exercise => this.addExercise(exercise))
+    },
+    addExercise(exercise: Exercise) {
       this.exercises.push({
-        name: 'Deadlift',
+        exercise: exercise,
         sets: []
       })
-    }
+    },
+    removeExercise(index: number) {
+      this.exercises.splice(index, 1)
+    },
   }
-
-
 })
 </script>
