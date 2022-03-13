@@ -28,9 +28,6 @@ import {Workout} from "~/types";
 export default Vue.extend({
   name: 'WorkoutIndexPage',
   components: {WorkoutCard},
-  created() {
-    this.$store.dispatch('workout/fetchWorkouts')
-  },
   computed: {
     ...mapGetters('workout', ['getWorkouts']),
     workouts(): Array<Workout> {

@@ -12,13 +12,13 @@
 
       <ul>
         <li v-for="workoutExercise in workout.exercises">
-          {{workoutExercise.sets.length}} x {{workoutExercise.exercise.name}}
+          {{ workoutExercise.sets.length }} x {{ workoutExercise.exercise.name }}
         </li>
       </ul>
     </v-card-text>
     <v-card-actions>
       <v-spacer/>
-      <v-btn text :to="'workout/'+workout.id" color="primary">
+      <v-btn :to="'workouts/'+workout.id" color="primary" text>
         START
         <v-icon right>mdi-arrow-right</v-icon>
       </v-btn>
@@ -41,6 +41,7 @@ export default Vue.extend({
   },
   computed: {
     performed(): string {
+      if (this.workout.performed_at === null) return '';
       const diff = (new Date().getTime() - new Date(this.workout.performed_at).getTime()) / 1000;
       if (diff >= 172800) return Math.floor(diff / 86400) + ' days';
       if (diff >= 86400) return Math.floor(diff / 86400) + ' day';

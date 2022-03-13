@@ -22,7 +22,7 @@ export const mutations: MutationTree<WorkoutState> = {
 
 export const actions: ActionTree<WorkoutState, RootState> = {
   fetchWorkouts({commit}) {
-    const data = [
+    const data: Workout =
       {
         id: 1,
         name: 'Title',
@@ -30,7 +30,7 @@ export const actions: ActionTree<WorkoutState, RootState> = {
         performed_at: new Date().toISOString(),
         exercises: [
           {
-            exercise: {id:1, name: 'Deadlift'},
+            exercise: {id: 1, name: 'Deadlift'},
             sets: [
               {
                 weight: 60,
@@ -48,22 +48,26 @@ export const actions: ActionTree<WorkoutState, RootState> = {
             ],
           },
         ],
-      },
-    ] as Workout[];
+      };
 
-    commit('SET_WORKOUT', data);
+    commit('ADD_WORKOUT', data);
+  },
+  addWorkout({getters, commit}, workout: Workout) {
+    workout.id = getters.getWorkoutMaxId + 1;
+    commit('ADD_WORKOUT', workout);
   },
   copyWorkout({getters, commit}, id) {
+    console.log(id)
     const item = {...getters.getWorkoutById(id)};
     item.id = getters.getWorkoutMaxId + 1;
     item.created_at = new Date().toISOString();
     item.performed_at = null;
     item.name = item.name + ' (copy)'
-    commit('add', item);
+    commit('ADD_WORKOUT', item);
   },
   removeWorkout({getters, commit}, id) {
     const index = getters.getWorkoutIndexById(id);
-    commit('remove', index);
+    commit('REMOVE_WORKOUT', index);
   },
 };
 
@@ -71,6 +75,6 @@ export const getters: GetterTree<WorkoutState, RootState> = {
   getWorkouts: state => state.list,
   getWorkoutById: state => (id: Workout['id']) => state.list.find(workout => workout.id === id),
   getWorkoutIndexById: (state: WorkoutState) => (id: Workout['id']) => state.list.findIndex(workout => workout.id === id),
-  getWorkoutMaxId: state => state.list[state.list.length - 1].id,
+  getWorkoutMaxId: state => state.list[state.list.length - 1]?.id ?? 0,
 
 };

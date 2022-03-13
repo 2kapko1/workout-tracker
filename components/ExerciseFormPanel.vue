@@ -32,7 +32,7 @@
           <v-text-field solo hide-details dense v-model="exercise.sets[index].reps"/>
         </v-col>
         <v-col cols="4">
-          <v-text-field solo hide-details dense v-model="exercise.sets[index].weight"/>
+          <v-text-field solo hide-details dense v-model="exercise.sets[index].weight" suffix="kg"/>
         </v-col>
         <v-col cols="2">
           <v-btn icon color="error" @click="removeSet(index)">
