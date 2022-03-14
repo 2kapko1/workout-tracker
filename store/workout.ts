@@ -12,6 +12,10 @@ export const mutations: MutationTree<WorkoutState> = {
   SET_WORKOUT(state, v) {
     state.list = v;
   },
+  UPDATE_WORKOUT(state, workout: Workout) {
+    const index = state.list.findIndex(w => w.id === workout.id);
+    state.list[index] = workout;
+  },
   ADD_WORKOUT(state, v) {
     state.list.push(v);
   },
@@ -55,6 +59,9 @@ export const actions: ActionTree<WorkoutState, RootState> = {
   addWorkout({getters, commit}, workout: Workout) {
     workout.id = getters.getWorkoutMaxId + 1;
     commit('ADD_WORKOUT', workout);
+  },
+  editWorkout({commit}, workout: Workout) {
+    commit('UPDATE_WORKOUT', workout);
   },
   copyWorkout({getters, commit}, id) {
     console.log(id)

@@ -20,9 +20,15 @@
       />
     </v-expansion-panels>
 
-    <v-row>
+    <v-row class="mt-2">
       <v-col cols="5">
-        <v-btn outlined color="warning" block to="/workout">
+        <v-btn
+          outlined
+          color="warning"
+          block
+          to="/workouts"
+          exact-path
+        >
           BACK
         </v-btn>
       </v-col>
@@ -36,16 +42,28 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, {PropType} from 'vue'
 import {Exercise, Workout, WorkoutExercise} from "~/types";
 
 export default Vue.extend({
   name: 'WorkoutForm',
+  props: {
+    workout: {
+      type: Object as PropType<Workout>,
+      required: false,
+      default: null,
+    }
+  },
   data() {
     return {
       exercises: [] as Array<WorkoutExercise>,
       name: '',
     }
+  },
+  created() {
+    if (!this.workout) return;
+    this.name = this.workout.name;
+    this.exercises = this.workout.exercises
   },
   methods: {
     save() {

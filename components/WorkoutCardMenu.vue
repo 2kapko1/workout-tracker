@@ -14,7 +14,7 @@
     </template>
 
     <v-list>
-      <v-list-item @click="editWorkout">
+      <v-list-item :to="'/workouts/'+workoutId+'/edit'">
         <v-list-item-title>Edit</v-list-item-title>
       </v-list-item>
       <v-list-item @click="copyWorkout">
