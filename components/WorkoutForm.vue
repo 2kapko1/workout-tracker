@@ -2,7 +2,7 @@
   <v-form>
     <v-row>
       <v-col cols="12">
-        <v-text-field label="Name" v-model="name"/>
+        <v-text-field v-model="name" label="Name"/>
       </v-col>
     </v-row>
     <div class="d-flex align-center">
@@ -23,17 +23,17 @@
     <v-row class="mt-2">
       <v-col cols="5">
         <v-btn
-          outlined
-          color="warning"
           block
-          to="/workouts"
+          color="warning"
           exact-path
+          outlined
+          to="/workouts"
         >
           BACK
         </v-btn>
       </v-col>
       <v-col cols="5" offset="2">
-        <v-btn outlined color="primary" block @click="save">
+        <v-btn block color="primary" outlined @click="save">
           SAVE
         </v-btn>
       </v-col>
@@ -63,15 +63,15 @@ export default Vue.extend({
   created() {
     if (!this.workout) return;
     this.name = this.workout.name;
-    this.exercises = this.workout.exercises
+    this.exercises = JSON.parse(JSON.stringify(this.workout.exercises));
   },
   methods: {
     save() {
       const workout: Workout = {
-        id: null,
+        id: this.workout?.id,
         name: this.name,
         created_at: new Date().toISOString(),
-        performed_at: null,
+        performed_at: this.workout?.performed_at,
         exercises: this.exercises,
       }
 

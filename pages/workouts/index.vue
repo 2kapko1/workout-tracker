@@ -26,7 +26,7 @@ import WorkoutCard from "~/components/WorkoutCard.vue";
 import {Workout} from "~/types";
 
 export default Vue.extend({
-  name: 'WorkoutIndexPage',
+  name: 'WorkoutsListPage',
   components: {WorkoutCard},
   computed: {
     ...mapGetters('workout', ['getWorkouts']),
