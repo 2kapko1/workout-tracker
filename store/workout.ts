@@ -1,6 +1,6 @@
-import {GetterTree, MutationTree, ActionTree} from "vuex";
-import {Workout} from "~/types";
-import {RootState} from "~/store/index";
+import {GetterTree, MutationTree, ActionTree} from 'vuex';
+import {Workout} from '~/types';
+import {RootState} from '~/store/index';
 
 export const state = () => ({
   list: [] as Workout[],
@@ -64,12 +64,12 @@ export const actions: ActionTree<WorkoutState, RootState> = {
     commit('UPDATE_WORKOUT', workout);
   },
   copyWorkout({getters, commit}, id) {
-    console.log(id)
+    console.log(id);
     const item = {...getters.getWorkoutById(id)};
     item.id = getters.getWorkoutMaxId + 1;
     item.created_at = new Date().toISOString();
     item.performed_at = null;
-    item.name = item.name + ' (copy)'
+    item.name = item.name + ' (copy)';
     commit('ADD_WORKOUT', item);
   },
   removeWorkout({getters, commit}, id) {
@@ -83,5 +83,4 @@ export const getters: GetterTree<WorkoutState, RootState> = {
   getWorkoutById: state => (id: Workout['id']) => state.list.find(workout => workout.id === id),
   getWorkoutIndexById: (state: WorkoutState) => (id: Workout['id']) => state.list.findIndex(workout => workout.id === id),
   getWorkoutMaxId: state => state.list[state.list.length - 1]?.id ?? 0,
-
 };
