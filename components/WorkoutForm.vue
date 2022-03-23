@@ -68,10 +68,10 @@ export default Vue.extend({
   methods: {
     save() {
       const workout: Workout = {
-        id: this.workout?.id,
+        id: this.workout?.id ?? null,
         name: this.name,
         created_at: new Date().toISOString(),
-        performed_at: this.workout?.performed_at,
+        performed_at: this.workout?.performed_at ?? null,
         exercises: this.exercises,
       }
 

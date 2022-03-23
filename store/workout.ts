@@ -64,7 +64,6 @@ export const actions: ActionTree<WorkoutState, RootState> = {
     commit('UPDATE_WORKOUT', workout);
   },
   copyWorkout({getters, commit}, id) {
-    console.log(id);
     const item = {...getters.getWorkoutById(id)};
     item.id = getters.getWorkoutMaxId + 1;
     item.created_at = new Date().toISOString();

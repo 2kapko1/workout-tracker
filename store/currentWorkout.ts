@@ -3,13 +3,7 @@ import {Exercise, Workout} from '~/types';
 import {RootState} from '~/store/index';
 
 export const state = () => ({
-  current: {
-    id: null,
-    name: 'Not set',
-    exercises: [],
-    performed_at: null,
-    created_at: '',
-  } as Workout,
+  current: null as Workout | null,
 });
 
 export type CurrentWorkoutState = ReturnType<typeof state>
@@ -19,7 +13,13 @@ export const mutations: MutationTree<CurrentWorkoutState> = {
     state.current = workout;
   },
   ADD_SET_TO_CURRENT_WORKOUT(state, index) {
-    state.current.exercises[index].sets.push({weight: null, reps: null});
+    state.current?.exercises[index].sets.push({weight: null, reps: null});
+  },
+  ADD_EXERCISE_TO_CURRENT_WORKOUT(state, exercise: Exercise) {
+    state.current?.exercises.push({
+      exercise: exercise,
+      sets: [],
+    });
   },
 };
 
@@ -43,9 +43,14 @@ export const actions: ActionTree<CurrentWorkoutState, RootState> = {
     const index = getters.getExerciseIndexById(id);
     commit('ADD_SET_TO_CURRENT_WORKOUT', index);
   },
+  addExercisesToCurrentWorkout({commit}, exercises: Exercise[]) {
+    exercises.forEach(exercise => {
+      commit('ADD_EXERCISE_TO_CURRENT_WORKOUT', exercise);
+    });
+  },
 };
 
 export const getters: GetterTree<CurrentWorkoutState, RootState> = {
   getCurrentWorkout: state => state.current,
-  getExerciseIndexById: state => (id: Exercise['id']) => state.current.exercises.findIndex(({exercise}) => exercise.id === id),
+  getExerciseIndexById: state => (id: Exercise['id']) => state.current?.exercises.findIndex(({exercise}) => exercise.id === id),
 };

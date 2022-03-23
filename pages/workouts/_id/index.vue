@@ -46,6 +46,10 @@
         </div>
       </v-card-text>
     </v-card>
+
+    <div class="d-flex justify-center mt-auto">
+      <exercises-dialog @addExercises="addExercises"/>
+    </div>
   </v-container>
 </template>
 
@@ -56,6 +60,12 @@ import {Exercise, Workout} from '~/types';
 
 export default Vue.extend({
   name: 'WorkoutIndexPage',
+  data() {
+    return {
+      elapsedTime: '00:00',
+      timeInterval: null as NodeJS.Timeout|null,
+    }
+  },
   computed: {
     ...mapGetters('currentWorkout', ['getCurrentWorkout']),
     workoutId(): Workout['id'] {
@@ -64,22 +74,32 @@ export default Vue.extend({
     workout(): Workout {
       return this.getCurrentWorkout;
     },
-    elapsedTimeInSeconds(): number {
-      if (this.workout.performed_at === null) return 0;
-      return Math.floor((new Date().getTime() - new Date(this.workout.performed_at).getTime()) / 1000);
-    },
-    elapsedTime(): string {
-      return Math.floor(this.elapsedTimeInSeconds / 60) + ':' + this.elapsedTimeInSeconds % 60;
-    },
   },
   created() {
     this.startWorkout(this.workoutId);
+    this.setElapsedTime();
+    this.timeInterval = setInterval(() => {
+      this.setElapsedTime()
+    }, 1000);
+  },
+  beforeDestroy() {
+    if (this.timeInterval) clearInterval(this.timeInterval)
   },
   methods: {
-    ...mapActions('currentWorkout', ['startWorkout', 'addSetToCurrentWorkout']),
+    ...mapActions('currentWorkout', ['startWorkout', 'addSetToCurrentWorkout', 'addExercisesToCurrentWorkout']),
     addSet(id: Exercise['id']) {
       this.addSetToCurrentWorkout(id);
     },
+    addExercises(exercises: Exercise[]) {
+      this.addExercisesToCurrentWorkout(exercises)
+    },
+    setElapsedTime() {
+      if (this.workout.performed_at === null) return;
+      const elapsedTimeInSeconds = Math.floor((new Date().getTime() - new Date(this.workout.performed_at).getTime()) / 1000);
+
+      this.elapsedTime = ('0' + Math.floor(elapsedTimeInSeconds / 60)).slice(-2)
+        + ':' + ('0' + (elapsedTimeInSeconds % 60)).slice(-2);
+    }
   },
 
 });
