@@ -1,5 +1,5 @@
 import {GetterTree, MutationTree, ActionTree} from 'vuex';
-import {Exercise, Workout} from '~/types';
+import {Exercise, Workout, Set} from '~/types';
 import {RootState} from '~/store/index';
 
 export const state = () => ({
@@ -11,6 +11,10 @@ export type CurrentWorkoutState = ReturnType<typeof state>
 export const mutations: MutationTree<CurrentWorkoutState> = {
   SET_CURRENT_WORKOUT(state, workout: Workout) {
     state.current = workout;
+  },
+  SET_CURRENT_WORKOUT_SETS(state, {index, sets}: {index: any, sets: Set[]}) {
+    if (!state.current) return;
+    state.current.exercises[index].sets = sets;
   },
   ADD_SET_TO_CURRENT_WORKOUT(state, index) {
     state.current?.exercises[index].sets.push({weight: null, reps: null});

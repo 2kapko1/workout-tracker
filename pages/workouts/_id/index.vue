@@ -10,44 +10,11 @@
     <v-card v-for="({exercise, sets}, index) in workout.exercises" :key="index" class="mt-2">
       <v-card-title>{{ exercise.name }}</v-card-title>
       <v-card-text>
-        <v-row>
-          <v-col>
-            Set
-          </v-col>
-          <v-col>
-            Reps
-          </v-col>
-          <v-col>
-            Weight
-          </v-col>
-          <v-col>
-            <v-simple-checkbox/>
-          </v-col>
-        </v-row>
-        <v-row v-for="(set,index) in sets" :key="index">
-          <v-col>
-            {{ index + 1 }}
-          </v-col>
-          <v-col>
-            {{ set.reps }}
-          </v-col>
-          <v-col>
-            {{ set.weight }} kg
-          </v-col>
-          <v-col>
-            <v-simple-checkbox/>
-          </v-col>
-        </v-row>
-        <div class="text-center mt-4">
-          <v-btn text @click="addSet(exercise.id)">
-            <v-icon left>mdi-plus</v-icon>
-            ADD SET
-          </v-btn>
-        </div>
+        <sets-form :value="sets" @input="updateSets(index, $event)"/>
       </v-card-text>
     </v-card>
 
-    <div class="d-flex justify-center mt-auto">
+    <div class="d-flex justify-center mt-3">
       <exercises-dialog @addExercises="addExercises"/>
     </div>
   </v-container>
@@ -56,42 +23,52 @@
 <script lang="ts">
 import Vue from 'vue';
 import {mapActions, mapGetters} from 'vuex';
-import {Exercise, Workout} from '~/types';
+import {Exercise, Workout, Set} from '~/types';
 
 export default Vue.extend({
   name: 'WorkoutIndexPage',
   data() {
     return {
       elapsedTime: '00:00',
-      timeInterval: null as NodeJS.Timeout|null,
-    }
+      timeInterval: null as NodeJS.Timeout | null,
+      selected: [],
+    };
   },
   computed: {
     ...mapGetters('currentWorkout', ['getCurrentWorkout']),
     workoutId(): Workout['id'] {
       return Number.parseInt(this.$route.params.id);
     },
-    workout(): Workout {
-      return this.getCurrentWorkout;
+    workout: {
+      get(): Workout {
+        return this.getCurrentWorkout;
+      },
+      set(workout: Workout) {
+        this.$store.commit('currentWorkout/SET_CURRENT_WORKOUT', workout);
+      },
     },
   },
   created() {
     this.startWorkout(this.workoutId);
     this.setElapsedTime();
     this.timeInterval = setInterval(() => {
-      this.setElapsedTime()
+      this.setElapsedTime();
     }, 1000);
   },
   beforeDestroy() {
-    if (this.timeInterval) clearInterval(this.timeInterval)
+    if (this.timeInterval) clearInterval(this.timeInterval);
   },
   methods: {
     ...mapActions('currentWorkout', ['startWorkout', 'addSetToCurrentWorkout', 'addExercisesToCurrentWorkout']),
     addSet(id: Exercise['id']) {
       this.addSetToCurrentWorkout(id);
     },
+    updateSets(index: Number, sets: Set[]) {
+      console.log(sets);
+      this.$store.commit('currentWorkout/SET_CURRENT_WORKOUT_SETS', {index, sets});
+    },
     addExercises(exercises: Exercise[]) {
-      this.addExercisesToCurrentWorkout(exercises)
+      this.addExercisesToCurrentWorkout(exercises);
     },
     setElapsedTime() {
       if (this.workout.performed_at === null) return;
@@ -99,7 +76,7 @@ export default Vue.extend({
 
       this.elapsedTime = ('0' + Math.floor(elapsedTimeInSeconds / 60)).slice(-2)
         + ':' + ('0' + (elapsedTimeInSeconds % 60)).slice(-2);
-    }
+    },
   },
 
 });

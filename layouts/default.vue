@@ -9,7 +9,7 @@
       <nuxt/>
     </v-main>
 
-    <v-bottom-navigation>
+    <v-bottom-navigation app>
       <v-btn to="/">
         <span>Profile</span>
         <v-icon>mdi-account</v-icon>
