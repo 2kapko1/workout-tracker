@@ -4,10 +4,10 @@
       {{ number }}
     </v-col>
     <v-col cols="4">
-      <v-text-field v-model="exerciseSet.reps" dense hide-details solo/>
+      <v-text-field v-model="reps" dense hide-details solo/>
     </v-col>
     <v-col cols="4">
-      <v-text-field v-model="exerciseSet.weight" dense hide-details solo suffix="kg"/>
+      <v-text-field v-model="weight" dense hide-details solo suffix="kg"/>
     </v-col>
     <v-col cols="2">
       <v-btn color="error" icon @click="removeSet()">
@@ -32,14 +32,25 @@ export default Vue.extend({
     },
   },
   computed: {
-    exerciseSet: {
-      get(): Set {
-        return this.value;
+    weight: {
+      get(): Set['weight'] {
+        return this.value.weight;
       },
-      set(set: Set) {
-        this.$emit('input', set);
+      set(weight: Set['weight']) {
+        console.log(weight)
+        this.$emit('input', {...this.value, weight});
       },
     },
+    reps: {
+      get(): Set['reps'] {
+        return this.value.reps;
+      },
+      set(reps: Set['reps']) {
+        this.$emit('input', {...this.value, reps});
+      },
+    },
+
+
   },
   methods: {
     removeSet() {

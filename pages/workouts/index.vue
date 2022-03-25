@@ -10,11 +10,11 @@
         ADD NEW
       </v-btn>
     </div>
-    <workout-card v-for="workout in workouts" :key="workout.id" :workout="workout"/>
+    <workout-card v-for="workout in workouts" :key="'workout-'+workout.id" :workout="workout"/>
     <div class="d-flex">
       <span class="text-h6">Samples</span>
     </div>
-    <workout-card-sample/>
+    <workout-card-sample v-for="sample in samples" :key="'sample-'+sample.id" :sample="sample"/>
 
   </v-container>
 </template>
@@ -30,8 +30,12 @@ export default Vue.extend({
   components: {WorkoutCard},
   computed: {
     ...mapGetters('workout', ['getWorkouts']),
+    ...mapGetters('workoutSample', ['getWorkoutSamples']),
     workouts(): Array<Workout> {
       return this.getWorkouts;
+    },
+    samples(): Array<Workout> {
+      return this.getWorkoutSamples;
     }
   }
 })

@@ -64,7 +64,6 @@ export default Vue.extend({
       this.addSetToCurrentWorkout(id);
     },
     updateSets(index: Number, sets: Set[]) {
-      console.log(sets);
       this.$store.commit('currentWorkout/SET_CURRENT_WORKOUT_SETS', {index, sets});
     },
     addExercises(exercises: Exercise[]) {

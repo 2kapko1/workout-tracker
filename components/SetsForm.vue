@@ -16,8 +16,9 @@
     <set-row
       v-for="(set, index) in sets"
       :key="index"
-      v-model="sets[index]"
       :number="index+1"
+      :value="sets[index]"
+      @input="updateSet(index, $event)"
       @removeSet="removeSet(index)"
     />
     <div class="text-center mt-4">
@@ -51,6 +52,12 @@ export default Vue.extend({
     },
   },
   methods: {
+    updateSet(index: any, value: Set) {
+      this.sets = this.sets.map((set, i) => {
+        if (index === i) return value;
+        return set;
+      });
+    },
     addSet() {
       this.sets = [...this.sets, {
         weight: null,
