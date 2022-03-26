@@ -37,7 +37,6 @@ export default Vue.extend({
         return this.value.weight;
       },
       set(weight: Set['weight']) {
-        console.log(weight)
         this.$emit('input', {...this.value, weight});
       },
     },

@@ -3,7 +3,7 @@
     <v-card-title>
       <span class="headline">{{ workout.name }}</span>
       <v-spacer/>
-      <workout-card-menu :workout-id="workout.id"/>
+      <workout-card-menu :workout-id="workout.id" :disabled="disabled"/>
     </v-card-title>
     <v-card-text>
       <template v-if="workout.performed_at !== null">
@@ -18,7 +18,7 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer/>
-      <v-btn :to="'workouts/'+workout.id" color="primary" text>
+      <v-btn :disabled="disabled" :to="'workouts/'+workout.id" color="primary" text>
         START
         <v-icon right>mdi-arrow-right</v-icon>
       </v-btn>
@@ -28,16 +28,19 @@
 </template>
 
 <script lang="ts">
-import Vue, {PropType} from 'vue'
-import {Workout} from "~/types";
+import Vue, {PropType} from 'vue';
+import {Workout} from '~/types';
 
 export default Vue.extend({
   name: 'WorkoutCard',
   props: {
     workout: {
       type: Object as PropType<Workout>,
-      required: true
-    }
+      required: true,
+    },
+    disabled: {
+      type: Boolean,
+    },
   },
   computed: {
     performed(): string {
@@ -50,8 +53,8 @@ export default Vue.extend({
       if (diff >= 120) return Math.floor(diff / 60) + ' minutes';
       if (diff >= 60) return Math.floor(diff / 60) + ' minute';
       return diff + ' seconds';
-    }
-  }
+    },
+  },
 
-})
+});
 </script>

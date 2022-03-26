@@ -5,6 +5,7 @@
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
+        :disabled="disabled"
         icon
         v-bind="attrs"
         v-on="on"
@@ -28,12 +29,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
 
 export default Vue.extend({
   name: 'WorkoutCardMenu',
   props: {
-    workoutId: Number
+    workoutId: {
+      type: Number,
+    },
+    disabled: {
+      type: Boolean,
+    },
   },
   methods: {
     removeWorkout() {
@@ -44,7 +50,7 @@ export default Vue.extend({
     },
     copyWorkout() {
       this.$store.dispatch('workout/copyWorkout', this.workoutId);
-    }
-  }
-})
+    },
+  },
+});
 </script>

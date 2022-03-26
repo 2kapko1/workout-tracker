@@ -49,7 +49,9 @@ export default Vue.extend({
     },
   },
   created() {
-    this.startWorkout(this.workoutId);
+    if (this.getCurrentWorkout !== null && this.getCurrentWorkout.id !== this.workoutId) this.$router.push('/workouts/'+this.getCurrentWorkout.id);
+    if (this.getCurrentWorkout === null) this.startWorkout(this.workoutId);
+
     this.setElapsedTime();
     this.timeInterval = setInterval(() => {
       this.setElapsedTime();

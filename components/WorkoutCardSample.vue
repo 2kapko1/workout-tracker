@@ -12,7 +12,7 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer/>
-      <v-btn color="warning" text @click="addSample">
+      <v-btn color="warning" text @click="addSample" :disabled="disabled">
         ADD TO YOUR TEMPLATES
         <v-icon right>mdi-plus</v-icon>
       </v-btn>
@@ -31,6 +31,9 @@ export default Vue.extend({
   props: {
     sample: {
       type: Object as PropType<Workout>,
+    },
+    disabled: {
+      type: Boolean,
     },
   },
   methods: {
