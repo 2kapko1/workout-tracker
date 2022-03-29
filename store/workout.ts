@@ -80,6 +80,6 @@ export const actions: ActionTree<WorkoutState, RootState> = {
 export const getters: GetterTree<WorkoutState, RootState> = {
   getWorkouts: state => state.list,
   getWorkoutById: state => (id: Workout['id']) => state.list.find(workout => workout.id === id),
-  getWorkoutIndexById: (state: WorkoutState) => (id: Workout['id']) => state.list.findIndex(workout => workout.id === id),
+  getWorkoutIndexById: state => (id: Workout['id']) => state.list.findIndex(workout => workout.id === id),
   getWorkoutMaxId: state => state.list[state.list.length - 1]?.id ?? 0,
 };

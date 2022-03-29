@@ -3,16 +3,19 @@
     <v-col cols="2">
       {{ number }}
     </v-col>
-    <v-col cols="4">
+    <v-col :cols="selectable?3:4">
       <v-text-field v-model="reps" dense hide-details solo/>
     </v-col>
-    <v-col cols="4">
+    <v-col :cols="selectable?3:4">
       <v-text-field v-model="weight" dense hide-details solo suffix="kg"/>
     </v-col>
     <v-col cols="2">
       <v-btn color="error" icon @click="removeSet()">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
+    </v-col>
+    <v-col v-if="selectable" cols="2">
+      <v-simple-checkbox/>
     </v-col>
   </v-row>
 </template>
@@ -29,6 +32,10 @@ export default Vue.extend({
     },
     number: {
       type: Number,
+    },
+    selectable: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

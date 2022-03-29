@@ -4,19 +4,23 @@
       <v-col cols="2">
         Set
       </v-col>
-      <v-col cols="4">
+      <v-col :cols="selectable?3:4">
         Reps
       </v-col>
-      <v-col cols="4">
+      <v-col :cols="selectable?3:4">
         Weight
       </v-col>
       <v-col cols="2">
+      </v-col>
+      <v-col v-if="selectable" cols="2">
+        <v-simple-checkbox/>
       </v-col>
     </v-row>
     <set-row
       v-for="(set, index) in sets"
       :key="index"
       :number="index+1"
+      :selectable="selectable"
       :value="sets[index]"
       @input="updateSet(index, $event)"
       @removeSet="removeSet(index)"
@@ -39,6 +43,10 @@ export default Vue.extend({
   props: {
     value: {
       type: Array as PropType<Set[]>,
+    },
+    selectable: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

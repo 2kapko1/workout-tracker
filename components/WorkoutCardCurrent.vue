@@ -36,11 +36,10 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapGetters('currentWorkout', ['getCurrentWorkout']),
+    ...mapGetters('currentWorkout', ['getCurrentWorkout', 'getElapsedTime']),
     workout(): Workout {
       return this.getCurrentWorkout;
     },
-
   },
   created() {
     this.setElapsedTime();
@@ -54,10 +53,7 @@ export default Vue.extend({
   methods: {
     setElapsedTime() {
       if (this.workout.performed_at === null) return;
-      const elapsedTimeInSeconds = Math.floor((new Date().getTime() - new Date(this.workout.performed_at).getTime()) / 1000);
-
-      this.elapsedTime = ('0' + Math.floor(elapsedTimeInSeconds / 60)).slice(-2)
-        + ':' + ('0' + (elapsedTimeInSeconds % 60)).slice(-2);
+      this.elapsedTime = this.getElapsedTime;
     },
   },
 });

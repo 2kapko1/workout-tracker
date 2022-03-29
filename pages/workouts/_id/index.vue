@@ -10,7 +10,7 @@
     <v-card v-for="({exercise, sets}, index) in workout.exercises" :key="index" class="mt-2">
       <v-card-title>{{ exercise.name }}</v-card-title>
       <v-card-text>
-        <sets-form :value="sets" @input="updateSets(index, $event)"/>
+        <sets-form :value="sets" @input="updateSets(index, $event)" selectable/>
       </v-card-text>
     </v-card>
 

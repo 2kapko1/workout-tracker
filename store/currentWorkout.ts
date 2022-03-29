@@ -12,7 +12,7 @@ export const mutations: MutationTree<CurrentWorkoutState> = {
   SET_CURRENT_WORKOUT(state, workout: Workout) {
     state.current = workout;
   },
-  SET_CURRENT_WORKOUT_SETS(state, {index, sets}: {index: any, sets: Set[]}) {
+  SET_CURRENT_WORKOUT_SETS(state, {index, sets}: { index: any, sets: Set[] }) {
     if (!state.current) return;
     state.current.exercises[index].sets = sets;
   },
@@ -56,5 +56,11 @@ export const actions: ActionTree<CurrentWorkoutState, RootState> = {
 
 export const getters: GetterTree<CurrentWorkoutState, RootState> = {
   getCurrentWorkout: state => state.current,
+  getElapsedTimeInSeconds: state => state.current?.performed_at ? Math.floor((new Date().getTime() - new Date(state.current.performed_at).getTime()) / 1000) : 0,
+  getElapsedTime: (state, getters) => {
+    const elapsedTimeInSeconds = getters.getElapsedTimeInSeconds;
+    return ('0' + Math.floor(elapsedTimeInSeconds / 60)).slice(-2)
+      + ':' + ('0' + (elapsedTimeInSeconds % 60)).slice(-2);
+  },
   getExerciseIndexById: state => (id: Exercise['id']) => state.current?.exercises.findIndex(({exercise}) => exercise.id === id),
 };
