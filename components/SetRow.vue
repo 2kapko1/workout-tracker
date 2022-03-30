@@ -15,7 +15,7 @@
       </v-btn>
     </v-col>
     <v-col v-if="selectable" cols="2">
-      <v-simple-checkbox/>
+      <v-simple-checkbox @input="$emit('check')" :value="selected"/>
     </v-col>
   </v-row>
 </template>
@@ -37,6 +37,10 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    selected: {
+      type: Boolean,
+      default: false,
+    }
   },
   computed: {
     weight: {

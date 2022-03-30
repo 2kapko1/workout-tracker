@@ -1,8 +1,8 @@
 export interface Workout {
-  id: number|null,
+  id: number | null,
   name: string,
   created_at: string,
-  performed_at: string|null,
+  performed_at: string | null,
   exercises: WorkoutExercise[],
 }
 

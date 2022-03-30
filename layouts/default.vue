@@ -66,7 +66,7 @@ export default Vue.extend({
   },
   methods: {
     setElapsedTime() {
-      if (this.currentWorkout.performed_at === null) return;
+      if (!this.currentWorkout?.performed_at) return;
       const elapsedTimeInSeconds = Math.floor((new Date().getTime() - new Date(this.currentWorkout.performed_at).getTime()) / 1000);
 
       this.elapsedTime = ('0' + Math.floor(elapsedTimeInSeconds / 60)).slice(-2)

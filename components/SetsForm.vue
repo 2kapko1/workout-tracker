@@ -13,7 +13,7 @@
       <v-col cols="2">
       </v-col>
       <v-col v-if="selectable" cols="2">
-        <v-simple-checkbox/>
+        <v-simple-checkbox @input="selectAll" :value="allSetsFinished"/>
       </v-col>
     </v-row>
     <set-row
@@ -24,6 +24,8 @@
       :value="sets[index]"
       @input="updateSet(index, $event)"
       @removeSet="removeSet(index)"
+      @check="select(index)"
+      :selected="selected.includes(index)"
     />
     <div class="text-center mt-4">
       <v-btn text @click="addSet">
@@ -49,6 +51,11 @@ export default Vue.extend({
       default: false,
     },
   },
+  data() {
+    return {
+      selected: [] as Number[],
+    };
+  },
   computed: {
     sets: {
       get(): Set[] {
@@ -58,8 +65,25 @@ export default Vue.extend({
         this.$emit('input', sets);
       },
     },
+    allSetsFinished() {
+      return this.sets.length > 0 && this.selected.length === this.sets.length;
+    },
   },
   methods: {
+    select(index: Number) {
+      if (this.selected.includes(index)) {
+        this.selected.splice(this.selected.findIndex(i => i === index), 1);
+      } else {
+        this.selected.push(index);
+      }
+    },
+    selectAll() {
+      if (this.allSetsFinished) {
+        this.selected = [];
+      } else {
+        this.selected = [...Array(this.sets.length).keys()]
+      }
+    },
     updateSet(index: any, value: Set) {
       this.sets = this.sets.map((set, i) => {
         if (index === i) return value;
